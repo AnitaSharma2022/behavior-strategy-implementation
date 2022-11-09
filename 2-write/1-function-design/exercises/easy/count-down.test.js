@@ -10,8 +10,29 @@
  */
 
 // -------- your solutions --------
+function countdown1(start=0)
+{
+ let result=[];
+ if(typeof start !== 'number')
+ {
+  throw new TypeError("Start should be a number");
+ }
+ if(!Number.isInteger(start))
+ {
+  throw new Error("Start should be an integer");
+ }
+ if(start < 0)
+ {
+  throw new RangeError("Start should be a positive number")
 
-for (const solution of [secretSolution]) {
+ }
+  for(let i=start; i>=0; i--)
+  {
+    result.push(i);
+  }
+  return result;
+}
+for (const solution of [secretSolution,countdown1]) {
   // the main test suite for the function
   describe(solution.name + ': counts down to 0', () => {
     it('default parameter is 0 -> [0]', () => {
@@ -24,6 +45,22 @@ for (const solution of [secretSolution]) {
       expect(solution(1)).toEqual([1, 0]);
     });
     // write at least 5 more tests ...
+    it('2 ->[2,1,0]', () =>{
+      expect(solution(2)).toEqual([2,1,0]);
+    });
+    it('5 ->[5,4,3,2,1,0]', () =>{
+      expect(solution(5)).toEqual([5,4,3,2,1,0]);
+    });
+    it("Should throw RangeError when the start is negative", () => {
+      expect (() => solution(-5)).toThrow(RangeError)
+    });
+    it("Should throw Error when the start is not an integer", () => {
+      expect (() => solution(2.5)).toThrow(Error)
+    });
+    it("Should throw TypeError when the start is  not a number", () => {
+      expect (() => solution("5")).toThrow(TypeError)
+    });
+
   });
 }
 

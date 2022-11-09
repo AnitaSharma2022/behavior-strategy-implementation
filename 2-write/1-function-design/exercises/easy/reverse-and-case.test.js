@@ -12,8 +12,19 @@
  */
 
 // -------- your solutions --------
-
-for (const solution of [secretSolution]) {
+function reverseString(text='',lowerCase=true)
+{
+  if(typeof text !== 'string')
+  {
+    throw new TypeError("Text should be a string");
+  }  
+  if (typeof lowerCase !== 'boolean')
+  {
+    throw new TypeError("lowerCase should be a boolean value");
+  }
+  return lowerCase ? text.split("").reverse().join("").toLowerCase() : text.split("").reverse().join("").toUpperCase();
+}
+for (const solution of [secretSolution,reverseString]) {
   describe(
     solution.name + ': reverses a string then sets to lower or upper case',
     () => {
@@ -28,8 +39,30 @@ for (const solution of [secretSolution]) {
       // write the tests indicated by the comments
       describe('when set to lower case', () => {
         // when the text is an empty string
-        it(_, () => {
-          expect(solution(_, _)).toEqual(_);
+        //it(_, () => {
+         // expect(solution(_, _)).toEqual(_);
+        //});
+        
+        it('default parameter is an empty string -> " "', () => {
+          expect(solution()).toEqual('');
+        });
+        it('Text is all uppercase -> ""', () => {             // when the text is all upper case
+          expect(solution("ABCD")).toEqual("dcba");
+        });
+        it('Text is all lowercase -> ""', () => {            // when the text is all lower case
+          expect(solution("abcd")).toEqual("dcba");
+        });
+        it('Text is all mixed -> ""', () => {            // when the text is mixed upper and lower case
+          expect(solution("ABcdE")).toEqual("edcba");
+        });
+        it('Text contains puntuations -> ""', () => {     // when the text contains punctuation
+          expect(solution("AB:cd")).toEqual("dc:ba");
+        });
+        it('Text contains numbers -> ""', () => {        // when the text contains numbers
+          expect(solution("AB12cd")).toEqual("dc21ba");
+        });  
+        it("Should throw a Type Error if the text is not a string", () => {        // when the text contains numbers
+          expect(() => solution(1).toThrow(TypeError));
         });
         // when the text is all upper case
         // when the text is all lower case
@@ -38,6 +71,24 @@ for (const solution of [secretSolution]) {
         // when the text contains numbers
       });
       describe('when set to upper case', () => {
+        it('default parameter is an empty string -> " "', () => {   // when the text is an empty string
+          expect(solution()).toEqual('');
+        });
+        it('Text is all uppercase -> "ABCD"', () => {     // when the text is all upper case
+          expect(solution("ABCD",false)).toEqual("DCBA");
+        });
+        it('Text is all lowercase -> "abcd"', () => {    // when the text is all lower case
+          expect(solution("abcd",false)).toEqual("DCBA");
+        });
+        it('Text is all mixed -> "ABcd"', () => {    // when the text is mixed upper and lower case
+          expect(solution("ABcd",false)).toEqual("DCBA");
+        });
+        it('Text contains punctuations -> "AB:cd"', () => {     // when the text contains punctuation
+          expect(solution("AB:cd",false)).toEqual("DC:BA");
+        });
+        it('Text contains numbers -> "AB12cd"', () => {    // when the text contains numbers
+          expect(solution("AB12cd",false)).toEqual("DC21BA");
+        });
         // when the text is an empty string
         // when the text is all upper case
         // when the text is all lower case
